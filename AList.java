@@ -24,6 +24,6 @@ public class AList<T> implements ListInterface<T> {
         return null;
     }
     public T remove(int pos)throws ListException{
-        return false;
+        return (T)TList[0];
     }
 }
