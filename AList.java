@@ -1,4 +1,6 @@
-
+//Brian Huang
+//10/18/22
+//Assignment #2
 public class AList<T> implements ListInterface<T> {
     private int count=0;
     private T[] TList = (T[]) new Object[1000];
