@@ -2,10 +2,12 @@
 //10/18/22
 //Assignment #2
 public class AList<T> implements ListInterface<T> {
-    private int count=0;
-    private T[] TList = (T[]) new Object[1000];
-
-
+    private int count;
+    private T[] TList = (T[]) new Object[20];
+    public AList(int size){
+        count=0;
+        TList = (T[]) new Object[size];
+    }
     public void add(T item) throws ListException{
         if(count==TList.length){
             throw new ListException("Error. Unable to add. List is full or not enough memory.");
@@ -25,7 +27,7 @@ public class AList<T> implements ListInterface<T> {
         if(pos<1){
             throw new ListException("");
         }
-        for(int k= count-1;count>=pos-1;k--){
+        for(int k= count-1;k>=pos-1;k--){
             TList[k+1]=TList[k];
         }
         TList [pos-1]=item;
