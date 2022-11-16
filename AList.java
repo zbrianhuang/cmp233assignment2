@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 //Brian Huang
 //10/18/22
 //Assignment #2
@@ -19,7 +21,14 @@ public class AList<T> implements ListInterface<T> {
         count++;
 
     }
-
+    public void resize(int newSize){
+        T[] temp = (T[]) new Object[newSize] ;
+        for(int i= 0;i<count;i++){
+            temp[i] = TList[i];
+        }
+        TList = temp;
+        
+    }
     public void add(T item, int pos) throws ListException{//insert
         if(item == null){
             throw new ListException("Cannot insert. Nulls not allowed");
@@ -30,8 +39,12 @@ public class AList<T> implements ListInterface<T> {
         for(int k= count-1;k>=pos-1;k--){
             TList[k+1]=TList[k];
         }
+        
         TList [pos-1]=item;
         count++;
+        if(count == TList.length-1){
+            resize(count+10);
+        }
     }
     public T get(int pos) throws ListException{
         //gets 
