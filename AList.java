@@ -5,14 +5,18 @@ import java.util.ArrayList;
 //Assignment #2
 public class AList<T> implements ListInterface<T> {
     private int count;
+    private int originalSize;
     private T[] TList = (T[]) new Object[20];
     public AList(int size){
         count=0;
         TList = (T[]) new Object[size];
+        originalSize = size;
     }
     public void add(T item) throws ListException{
         if(count==TList.length){
-            throw new ListException("Error. Unable to add. List is full or not enough memory.");
+            
+            TList = resize(originalSize);
+            //throw new ListException("Error. Unable to add. List is full or not enough memory.");
         }
         if(item==null){
             throw new ListException("Error. Unable to add. Cannot add null entries");
@@ -21,13 +25,19 @@ public class AList<T> implements ListInterface<T> {
         count++;
 
     }
-    public void resize(int newSize){
-        T[] temp = (T[]) new Object[newSize] ;
-        for(int i= 0;i<count;i++){
+    private T[] resize(int newSize)throws ListException{
+        try{
+        T[] temp = (T[]) new Object[count+newSize] ;
+        for(int i= 0;i<TList.length;i++){
+            
             temp[i] = TList[i];
         }
-        TList = temp;
+            
+            return temp;
         
+        }catch(OutOfMemoryError e){
+            throw new ListException("Error. Unable to resize. Cannot add to array.");
+        }
     }
     public void add(T item, int pos) throws ListException{//insert
         if(item == null){
@@ -49,7 +59,7 @@ public class AList<T> implements ListInterface<T> {
     public T get(int pos) throws ListException{
         //gets 
         if(pos<1||pos>count){
-            throw new ListException("Error. Unable to insert. Bad position.");
+            throw new ListException("Error. Unable to get. Bad position.");
         }
         if(count==0){
             throw new ListException("Error. Unable to get. List is empty.");
@@ -92,6 +102,9 @@ public class AList<T> implements ListInterface<T> {
     }
     public int size(){
         return count;
+    }
+    public int getCapcity(){
+        return TList.length;
     }
     public String toString(){
         if(count==0){
@@ -137,6 +150,26 @@ public class AList<T> implements ListInterface<T> {
     public boolean isEmpty(){
         if(count>0){
             return false;
+        }
+        return true;
+    }
+    public boolean equals(AList<T> other){
+        if(count != other.size()){
+            System.out.println(count+1+"+"+other.size());
+            return false;
+        }
+        for(int i = 1; i <= this.size(); i++){
+            try {
+                
+                System.out.println(get(i)+" "+other.get(i));
+                if(!get(i).equals(other.get(i)))
+                {
+                    return false;
+                }
+            } catch (ListException e) {
+                System.out.println(e);
+                return false;
+            }
         }
         return true;
     }
